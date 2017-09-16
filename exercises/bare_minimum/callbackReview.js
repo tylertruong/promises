@@ -10,10 +10,10 @@ var pluckFirstLineFromFile = function (filePath, callback) {
   // TODO
   fs.readFile(filePath, (err, content) => {
     if (err) {
-      callback(err);
+      callback(err, null);
     } else {
       var data = content.toString().split('\n');
-      callback(err, data[0]);
+      callback(null, data[0]);
     }
 
   });
@@ -24,9 +24,9 @@ var getStatusCode = function (url, callback) {
   // TODO
   request(url, (error, response, html) => {
     if (error) {
-      callback(error, response);
+      callback(error, null);
     } else {
-      callback(error, response.statusCode);
+      callback(null, response.statusCode);
     }
   });
 };
