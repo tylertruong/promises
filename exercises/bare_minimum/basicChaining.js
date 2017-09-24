@@ -8,13 +8,13 @@
  * HINT: We exported some similar promise-returning functions in previous exercises
  */
 
-var fs = require('fs');
-var Promise = require('bluebird');
-var cr = Promise.promisifyAll(require('./callbackReview'));
-var pr = require('./promisification');
+const fs = require('fs');
+const Promise = require('bluebird');
+const cr = Promise.promisifyAll(require('./callbackReview'));
+const pr = require('./promisification');
 
 
-var fetchProfileAndWriteToFile = function(readFilePath, writeFilePath) {
+const fetchProfileAndWriteToFile = function(readFilePath, writeFilePath) {
   // TODO
   return cr.pluckFirstLineFromFileAsync(readFilePath)
     .then((username) => {

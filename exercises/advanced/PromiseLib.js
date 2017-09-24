@@ -15,7 +15,18 @@ var Promise = require('bluebird');
  */
 
 var promisify = function(nodeStyleFn) {
- // TODO
+
+  return function(args) {
+    return new Promise ((resolve, reject) => {
+      nodeStyleFn(args, (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+  };
 };
 
 
@@ -32,6 +43,25 @@ var promisify = function(nodeStyleFn) {
 
 var all = function(arrayOfPromises) {
   // TODO
+  return new Promise ((resolve, reject) => {
+    let results = [];
+    let counter = 0;
+    for (let i = 0; i < arrayOfPromises.length; i++) {
+      arrayOfPromises[i]
+        .then((result) => {
+          results[i] = result;
+          counter++;
+        })
+        .then(() => {
+          if (counter === arrayOfPromises.length) {
+            resolve(results);
+          }
+        })
+        .catch(err => {
+          reject(err);
+        });
+    }
+  });
 };
 
 
@@ -43,6 +73,18 @@ var all = function(arrayOfPromises) {
 
 var race = function(arrayOfPromises) {
   // TODO
+  return new Promise ((resolve, reject) => {
+    for (let i = 0; i < arrayOfPromises.length; i++) {
+      arrayOfPromises[i]
+        .then((result) => {
+          resolve(result); 
+        })
+        .catch(err => {
+          reject(err);
+        });
+    }
+
+  });
 };
 
 // Export these functions so we can unit test them
